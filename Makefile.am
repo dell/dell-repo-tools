@@ -2,8 +2,8 @@
 
 include Makefile-std
 
-pkgconfdir = $(sysconfdir)/firmware/
-#nodist_pkgconf_DATA = etc/firmware/firmware.conf
+pkgconfdir = $(sysconfdir)/firmware/firmware.d/
+dist_pkgconf_DATA = pkg/dell-repo-tools.conf
 
 EXTRA_DIST += COPYING-GPL COPYING-OSL
 
