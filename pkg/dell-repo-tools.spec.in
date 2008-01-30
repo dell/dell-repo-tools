@@ -25,15 +25,10 @@ URL:            http://linux.dell.com/libsmbios/download/
 Source0:        http://linux.dell.com/libsmbios/download/%{name}/%{name}-%{version}/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-# This package is noarch for everything except RHEL3. Have to build arch
-# specific pkgs for RHEL3
-%if %(test "%{dist}" != ".el3" && echo 1 || echo 0)
-BuildArch:      noarch
-%endif
-
 BuildRequires:  python-devel
-Requires: libsmbios-bin unshield firmware-addon-dell
-Requires: firmware-tools >= 0:1.4
+Requires: libsmbios-bin unshield wine firmware-addon-dell
+Requires: firmware-tools >= 0:2.0
+Requires: firmware-extract >= 0:2.0
 
 %description
 placeholder
