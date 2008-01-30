@@ -24,9 +24,6 @@ do
       d)
         DEBUG=1
         ;;
-      t)
-        ADDITIONAL_TYPES="-t $OPTARG $ADDITIONAL_TYPES"
-        ;;
       *) 
         usage
         ;;
@@ -66,30 +63,18 @@ fi
 
 if [ -z "$NO_EXTRACT" ]; then
   echo "Extracting HDR files."
-  mkdir -p $OUTDIR/SPECS
-  mkdir -p $OUTDIR/out/log
-  cp -f /usr/share/firmware/spec/systemid.conf $OUTDIR/SPECS/systemid.conf
-  extract_hdr -d $MIRROR_DIR -o $OUTDIR/out -s $OUTDIR/SPECS/\*.conf $ADDITIONAL_TYPES
+  /usr/sbin/firmwaretool --extract --outputdir=$OUTDIR/out  $MIRROR_DIR
 fi
-
 
 if [ -z "$NO_RPM" ]; then
-  mkdir -p $OUTDIR/SPECS
-  mkdir -p $OUTDIR/SOURCES
-  mkdir -p $OUTDIR/BUILD
-  cp /usr/share/firmware/spec/*_spec.in $OUTDIR/SPECS/
-  cp -f /usr/share/firmware/spec/systemid.conf $OUTDIR/SPECS/systemid.conf
   cp /usr/share/firmware/spec/dell-std-license.txt $OUTDIR/SOURCES/
   echo "Building RPMS."
-  build_rpm -i $OUTDIR/out -b $OUTDIR -s $OUTDIR/SPECS
-  rm -rf $OUTDIR/BUILD
-  rm -rf $OUTDIR/SOURCES
+  /usr/sbin/firmwaretool --buildrpm $OUTDIR/out
 fi
 
-if [ -z "$NO_DEB" ]; then
-  echo "Building DEBS."
-  build_deb -i $OUTDIR/out -b $OUTDIR -s /usr/share/firmware/spec
-fi
-
+#if [ -z "$NO_DEB" ]; then
+#  echo "Building DEBS."
+#  build_deb -i $OUTDIR/out -b $OUTDIR -s /usr/share/firmware/spec
+#fi
 
 echo "Run complete: $(date)"
