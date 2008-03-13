@@ -65,6 +65,7 @@ lftp -c "open ftp://ftp.dell.com; \
     mirror $options scsi-drv ;\
     mirror $options catalog ;\
     mirror $options sysman ;\
+    mirror $options tape-dev ;\
     mirror $options cmsdk ;\
     mirror $options  dmi ;\
     "
