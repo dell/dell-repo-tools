@@ -222,7 +222,7 @@ def main():
         for option, argument in opts:
             if option in ("-h", "--help"):
                 print __doc__
-                sys.exit(0)
+                return 2
             if option in ("-i", "--input_dir"):
                 inputDir = os.path.realpath(argument)
             if option in ("-b", "--build_dir"):
@@ -243,7 +243,7 @@ def main():
         repo = repository.Repository( inputDir )
         for pkg in repo.iterLatestPackages():
             try:
-                madeNewPackage = makeDeb(pkg, buildDir, specDir, forceRebuild)
+                madeNewPackage += makeDeb(pkg, buildDir, specDir, forceRebuild)
             except (KeyboardInterrupt):
                 raise
             except:
@@ -255,17 +255,18 @@ def main():
     except (getopt.GetoptError):
         # print help information and exit:
         print __doc__
-        sys.exit(2)
+        return 2
 
     except (KeyboardInterrupt):
         try:
             os.wait()
         except OSError:
             pass
-        sys.exit(3)
+        return 3
 
     #shell logic
     if madeNewPackage > 0:
+        print "Total %d new packages." % madeNewPackage
         return 0
     return 1
 
