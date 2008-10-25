@@ -16,7 +16,7 @@ set -e
 chmod -R +w _builddir ||:
 rm -rf _builddir
 
-git clean -d
+#git clean -d
 ./autogen.sh
 
 mkdir _builddir
@@ -36,7 +36,5 @@ for i in *.tar.{gz,bz2} *.zip *.src.rpm; do
     [ ! -e $DEST/$(basename $i) ] || continue
     cp $i $DEST
 done
-
-/var/ftp/pub/yum/dell-repo/software/_tools/upload_rpm.sh ${PACKAGE_NAME}-${PACKAGE_VERSION}-1*.src.rpm
 
 git push --tags origin master:master
