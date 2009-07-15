@@ -1,8 +1,8 @@
 # vim:tw=0:ts=4:sw=4:et
 %define major @RELEASE_MAJOR@
 %define minor @RELEASE_MINOR@
-%define sub @RELEASE_SUBLEVEL@
-%define extralevel @RELEASE_RPM_EXTRALEVEL@
+%define sub @RELEASE_MICRO@
+%define extralevel @RELEASE_RPM_EXTRA@
 %define rpm_release 1
 %define release_name dell-repo-tools
 %define release_version %{major}.%{minor}.%{sub}%{extralevel}
@@ -25,6 +25,13 @@ URL:            http://linux.dell.com/libsmbios/download/
 Source0:        http://linux.dell.com/libsmbios/download/%{name}/%{name}-%{version}/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+# SUSE build has anal directory ownership check. RPM which owns all dirs *must*
+# be installed at buildtime. This means we have to BuildRequire them, even if
+# we dont really need them at build time.
+%if 0%{?suse_version}
+BuildRequires: firmware-tools yum
+%endif
+
 BuildRequires:  python-devel
 Requires: smbios-utils unshield wine firmware-addon-dell
 Requires: firmware-tools >= 0:2.0
@@ -41,18 +48,28 @@ placeholder
 %build
 # this line lets us build an RPM directly from a git tarball
 [ -e ./configure ] || ./autogen.sh
+
+# fix problems when buildsystem time is out of sync. ./configure will
+# fail if newly created files are older than the packaged files.
+# this should normally be a no-op on proper buildsystems.
+touch configure
+find . -type f -newer configure -print0 | xargs -r0 touch
+
 %configure
 make -e %{?_smp_mflags} 
 
 
 %install
+# Fedora Packaging guidelines
 rm -rf $RPM_BUILD_ROOT
+# SUSE Packaging rpmlint
+mkdir $RPM_BUILD_ROOT
+
 make install DESTDIR=%{buildroot} INSTALL="%{__install} -p"
 
  
 %clean
 rm -rf $RPM_BUILD_ROOT
-
 
 %files
 %defattr(-,root,root,-)

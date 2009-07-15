@@ -12,5 +12,3 @@ dist_bin_SCRIPTS = \
 
 pkgdatadir = $(datadir)/firmware-tools/
 dist_pkgdata_DATA = libexec/extract.dat
-
-REPLACE_VARS_ON_INSTALL=
