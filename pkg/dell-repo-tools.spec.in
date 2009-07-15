@@ -14,14 +14,14 @@
 %define debug_package %{nil}
 
 Name:           dell-repo-tools
-Version:        %{release_version} 
+Version:        %{release_version}
 Release:        %{rpm_release}%{?dist}
 Summary:        Scripts to extract BIOS/Firmware from Dell Update Packages
 
 Group:          Applications/System
 # License is actually GPL/OSL dual license (GPL Compatible), but rpmlint complains
 License:        GPL style
-URL:            http://linux.dell.com/libsmbios/download/ 
+URL:            http://linux.dell.com/libsmbios/download/
 Source0:        http://linux.dell.com/libsmbios/download/%{name}/%{name}-%{version}/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -56,7 +56,7 @@ touch configure
 find . -type f -newer configure -print0 | xargs -r0 touch
 
 %configure
-make -e %{?_smp_mflags} 
+make -e %{?_smp_mflags}
 
 
 %install
@@ -67,16 +67,16 @@ mkdir $RPM_BUILD_ROOT
 
 make install DESTDIR=%{buildroot} INSTALL="%{__install} -p"
 
- 
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%if 0%{?suse_version} >= 1110 
+%if 0%{?suse_version} >= 1110
  %dir %{_sysconfdir}/firmware
  %dir %{_sysconfdir}/firmware/firmware.d
- %dir %{_datadir}/firmware-tools  
+ %dir %{_datadir}/firmware-tools
 %endif
 %doc COPYING-GPL COPYING-OSL README
 %{_sysconfdir}/firmware/firmware.d/*
