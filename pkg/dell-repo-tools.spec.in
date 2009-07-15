@@ -73,6 +73,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
+%if 0%{?suse_version} >= 1110 
+ %dir %{_sysconfdir}/firmware
+ %dir %{_sysconfdir}/firmware/firmware.d
+ %dir %{_datadir}/firmware-tools  
+%endif
 %doc COPYING-GPL COPYING-OSL README
 %{_sysconfdir}/firmware/firmware.d/*
 %{_datadir}/firmware-tools/extract.dat
