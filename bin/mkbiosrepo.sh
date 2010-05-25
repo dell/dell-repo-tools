@@ -12,7 +12,7 @@ function usage ()
 MIRROR_DIR=
 OUTDIR=
 
-while getopts "o:m:dt:" Option
+while getopts "o:m:dt:g:" Option
 do
   case $Option in
       o)
@@ -23,6 +23,9 @@ do
         ;;
       d)
         DEBUG=1
+        ;;
+      g)
+        GPGNAME=$OPTARG
         ;;
       *) 
         usage
@@ -63,13 +66,22 @@ fi
 
 if [ -z "$NO_EXTRACT" ]; then
   echo "Extracting HDR files."
-  /usr/sbin/firmwaretool --extract --outputdir=$OUTDIR/out  $MIRROR_DIR
+  /usr/sbin/firmwaretool --extract --outputdir=$OUTDIR/extract  $MIRROR_DIR
 fi
 
 if [ -z "$NO_RPM" ]; then
   cp /usr/share/firmware/spec/dell-std-license.txt $OUTDIR/SOURCES/
   echo "Building RPMS."
-  /usr/sbin/firmwaretool --buildrpm $OUTDIR/out
+  find $OUTDIR/extract -name rpm -type d -exec rm -rf {} \+
+  /usr/sbin/firmwaretool --buildrpm --output_topdir=$OUTDIR/rpms  $OUTDIR/extract
+fi
+
+find $OUTDIR -type d -exec chmod 2775 \{\} \;
+find $OUTDIR -type f -exec chmod 0644 \{\} \;
+/usr/sbin/hardlink -c $OUTDIR
+
+if [ -n "$GPGNAME" ]; then
+    findunsigned.py -d $OUTDIR/rpms | xargs -r rpmwrap.sh --addsign --define '_signature gpg' --define "_gpg_name $GPGNAME" --define "__gpg_check_password_cmd /bin/true" --define '__gpg_sign_cmd %{__gpg} gpg --batch --no-verbose --no-armor --no-secmem-warning -u "%{_gpg_name}" -sbo %{__signature_filename} %{__plaintext_filename}'
 fi
 
 #if [ -z "$NO_DEB" ]; then
