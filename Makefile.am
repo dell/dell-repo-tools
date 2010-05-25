@@ -8,7 +8,7 @@ dist_pkgconf_DATA = pkg/dell-repo-tools.conf
 EXTRA_DIST += COPYING-GPL COPYING-OSL
 
 dist_bin_SCRIPTS = \
-	bin/build_deb  bin/dup_pkginfo.py  bin/make_dell_mirror  bin/mkbiosrepo.sh
+	bin/build_deb  bin/make_dell_mirror  bin/mkbiosrepo.sh   bin/findunsigned.py   bin/rpmwrap.sh
 
 pkgdatadir = $(datadir)/firmware-tools/
 dist_pkgdata_DATA = libexec/extract.dat
