@@ -7,7 +7,7 @@ set argv [linsert $argv 1 "__gpg_check_password_cmd /bin/true" ]
 set argv [linsert $argv 0 "--define" ]
 set argv [linsert $argv 1 "%__gpg_sign_cmd %{__gpg} gpg --batch --no-verbose --no-armor --use-agent --no-secmem-warning -u '%{_gpg_name}' -sbo %{__signature_filename} %{__plaintext_filename}" ]
 
-eval spawn rpm $argv
+eval spawn -noecho rpm $argv
 
 set timeout 300
 
