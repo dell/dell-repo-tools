@@ -81,7 +81,7 @@ find $OUTDIR -type f -exec chmod 0644 \{\} \;
 /usr/sbin/hardlink -c $OUTDIR
 
 if [ -n "$GPGNAME" ]; then
-    findunsigned.py -d $OUTDIR/rpms | xargs -r rpmwrap.sh --addsign --define '_signature gpg' --define "_gpg_name $GPGNAME" --define "__gpg_check_password_cmd /bin/true" --define '__gpg_sign_cmd %{__gpg} gpg --batch --no-verbose --no-armor --no-secmem-warning -u "%{_gpg_name}" -sbo %{__signature_filename} %{__plaintext_filename}'
+    findunsigned.py -d $OUTDIR/rpms | xargs -r rpmwrap.sh --addsign --define "_gpg_name $GPGNAME"
 fi
 
 #if [ -z "$NO_DEB" ]; then
