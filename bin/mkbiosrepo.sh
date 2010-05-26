@@ -70,7 +70,6 @@ if [ -z "$NO_EXTRACT" ]; then
 fi
 
 if [ -z "$NO_RPM" ]; then
-  cp /usr/share/firmware/spec/dell-std-license.txt $OUTDIR/SOURCES/
   echo "Building RPMS."
   find $OUTDIR/extract -name rpm -type d -exec rm -rf {} \+
   /usr/sbin/firmwaretool --buildrpm --output_topdir=$OUTDIR/rpms  $OUTDIR/extract
