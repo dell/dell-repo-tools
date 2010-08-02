@@ -12,7 +12,9 @@ import types
 import rpmUtils
 import rpmUtils.transaction
 
+sys.path.insert(0, "/usr/libexec/dell-repo-tools/")
 sys.path.insert(0, os.path.join(os.path.dirname(sys.argv[0]), "lib"))
+sys.path.insert(0, os.path.join(os.path.dirname(sys.argv[0]), "libexec"))
 
 from decorator import decorator
 import mebtrace

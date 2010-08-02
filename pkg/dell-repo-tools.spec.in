@@ -82,6 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/firmware/firmware.d/*
 %{_datadir}/firmware-tools/extract.dat
 %attr(0755,root,root) %{_bindir}/*
+%{_libexecdir}/%{name}
 
 
 %changelog

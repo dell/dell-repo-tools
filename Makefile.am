@@ -12,3 +12,8 @@ dist_bin_SCRIPTS = \
 
 pkgdatadir = $(datadir)/firmware-tools/
 dist_pkgdata_DATA = libexec/extract.dat
+
+
+dist_pkglibexec_SCRIPTS = 	libexec/decorator.py	\
+			libexec/mebtrace.py
+
