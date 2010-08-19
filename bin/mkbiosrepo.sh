@@ -73,6 +73,7 @@ if [ -z "$NO_RPM" ]; then
   echo "Building RPMS."
   find $OUTDIR/extract -name rpm -type d -exec rm -rf {} \+
   /usr/sbin/firmwaretool --buildrpm --output_topdir=$OUTDIR/rpms  $OUTDIR/extract
+  find $OUTDIR/extract -name rpm -type d -exec rm -rf {} \+
 fi
 
 find $OUTDIR -type d -exec chmod 2775 \{\} \;
