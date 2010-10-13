@@ -2,4 +2,4 @@
 
   * Automatically packaged release
 
- -- firmware-tools developers <firmware-tools-devel@lists.us.dell.com>  Tue, 16 Oct 2007 10:27:03 -0500
+ -- firmware-tools developers <firmware-tools-devel@lists.us.dell.com>  %(changelog_date)s

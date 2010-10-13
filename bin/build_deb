@@ -35,6 +35,7 @@ import re
 import shutil
 import tempfile
 import string
+import datetime
 
 import firmwaretools.pycompat  as pycompat
 import firmware_addon_dell.HelperXml as HelperXml
@@ -171,7 +172,11 @@ def makeDeb(pkg, buildDir, specDir, forceRebuild):
 
     templateDir = getTemplateDir(specDir)
     shutil.copytree(templateDir, debianDir)
-    populateTemplates(debianDir, dict(packageIni.items("package")))
+    now = datetime.datetime.utcnow()
+    dateStr = now.strftime("%a, %d %b %Y %H:%M:%S -0000")
+    d = dict(packageIni.items("package"))
+    d['changelog_date'] = dateStr
+    populateTemplates(debianDir, d)
     os.chmod(os.path.join(debianDir, 'rules'), 0755)
     os.chdir(destDir)
     cmd = "debuild -rfakeroot --check-dirname-level=0 -us -uc -b"
