@@ -174,7 +174,7 @@ def makeDeb(pkg, buildDir, specDir, forceRebuild):
     populateTemplates(debianDir, dict(packageIni.items("package")))
     os.chmod(os.path.join(debianDir, 'rules'), 0755)
     os.chdir(destDir)
-    cmd = "debuild -rfakeroot --check-dirname-level=0 --no-linda --no-lintian -us -uc -b"
+    cmd = "debuild -rfakeroot --check-dirname-level=0 -us -uc -b"
     if pycompat.executeCommand(cmd):
         raise DebBuildFailed("DEB build command failed.")
     os.chdir(cwd)
