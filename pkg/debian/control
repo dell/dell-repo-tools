@@ -7,7 +7,7 @@ Standards-Version: 3.7.2
 
 Package: dell-repo-tools
 Architecture: all
-Depends: ${python:Depends}, firmware-extract, firmware-addon-dell (>= 1.4.9), firmware-tools (>= 1.5.8), libsmbios-bin, unshield, wine, lftp, debhelper
+Depends: ${python:Depends}, firmware-extract, firmware-addon-dell (>= 1.4.9), firmware-tools (>= 1.5.8), libsmbios-bin, unshield, wine, lftp, debhelper, hardlink
 Provides: ${python:Provides}
 Description: Scripts to extract BIOS/Firmware from Dell Update Packages
  .

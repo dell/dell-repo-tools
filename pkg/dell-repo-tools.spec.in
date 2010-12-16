@@ -33,7 +33,7 @@ BuildRequires: firmware-tools yum
 %endif
 
 BuildRequires:  python-devel
-Requires: smbios-utils unshield wine firmware-addon-dell
+Requires: smbios-utils unshield wine firmware-addon-dell hardlink
 Requires: firmware-tools >= 0:2.0
 Requires: firmware-extract >= 0:2.0
 
